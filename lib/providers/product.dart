@@ -9,7 +9,7 @@ final double price;
 final String imageUrl;
  double totalweight;
 final double cp;
-String qty;
+String qty = "";
 //final List<CattleType> feedtypes ;
 
 

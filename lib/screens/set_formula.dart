@@ -150,9 +150,9 @@ class _SetFormulaState extends State<SetFormula>
                               margin: EdgeInsets.only(top: 10),
                               child: RaisedButton(
                                 color: Colors.blue,
-                                child: Text("Ok"),
+                                child:  Text("Ok"),
                                 elevation: 8.0,
-                                onPressed: () {
+                                onPressed: selectedType == null ? null : () {
                                   setState(() {
                                     selectedType.qty = _controller.text;
                                     _list.add(selectedType);
@@ -245,12 +245,10 @@ class _SetFormulaState extends State<SetFormula>
             });
           },
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
-              Text("Quantity : ${_list.fold(0,(a,b) => a +  int.parse(b.qty))}"),
-              Text("Place Order"),
-              Text("Total : ${_list.fold(0.0,(a,b) => a + (b.price))}"),
-              Text("price for 40KG : ${_list.fold(0.0,(a,b) => a + (b.price)) / _list.fold(0,(a,b) => a +  int.parse(b.qty)) * 40} "   )
+              Expanded(child: Text("Quantity : ${_list.fold(0,(a,b) => a +  int.parse(b.qty))}")),
+              Expanded(child: Text("Total : ${_list.fold(0.0,(a,b) => a + (b.price))}")),
+              Expanded(flex: 2,child: Text("price for 40KG : ${ _list.isEmpty ? "" : (_list.fold(0.0,(a,b) => a + (b.price)) / _list.fold(0,(a,b) => a +  int.parse(b.qty)) * 40).toString().split('.')[1].substring(0,4)} "   ))
             ],
           ),
         ),
