@@ -156,6 +156,7 @@ class _SetFormulaState extends State<SetFormula>
                                   setState(() {
                                     selectedType.qty = _controller.text;
                                     _list.add(selectedType);
+                                    _controller.text = "";
                                   });
                                 },
                               ),
@@ -226,7 +227,7 @@ class _SetFormulaState extends State<SetFormula>
             setState(() {
               proccessing = true;
             });
-            productData.AddOrder(_list).then((value) {
+            productData.AddOrder(_list,_editedProduct.id).then((value) {
               if(value == 200){
                 setState(() {
                   _list = [];
@@ -246,9 +247,10 @@ class _SetFormulaState extends State<SetFormula>
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
-              Text("Items : ${_list.length}"),
+              Text("Quantity : ${_list.fold(0,(a,b) => a +  int.parse(b.qty))}"),
               Text("Place Order"),
-              Text("Total : ${_list.fold(0.0,(a,b) => a + (b.price))}")
+              Text("Total : ${_list.fold(0.0,(a,b) => a + (b.price))}"),
+              Text("price for 40KG : ${_list.fold(0.0,(a,b) => a + (b.price)) / _list.fold(0,(a,b) => a +  int.parse(b.qty)) * 40} "   )
             ],
           ),
         ),

@@ -175,7 +175,7 @@ class ProductProviders with ChangeNotifier {
     }
   }
 
-  Future<int> AddOrder(List<Product> product) async {
+  Future<int> AddOrder(List<Product> product,parentid) async {
     int statusCode;
     const url = 'https://cattle-feed-9ad31.firebaseio.com/oderplace.json';
     try {
@@ -183,8 +183,10 @@ class ProductProviders with ChangeNotifier {
         url,
         body: json.encode(
             {
+              "orderId" : parentid,
               "order" : product.map((e){
                 return {
+                  "productId" : e.id,
                   "productname" : e.name,
                   "productprice" : e.price,
                   "productqty" : e.qty,
